@@ -1,12 +1,10 @@
-// Get buttons and result container
 const speakerBtn = document.getElementById('speakerBtn');
 const questionBtn = document.getElementById('questionBtn');
 const questionResult = document.getElementById('questionResult');
 
-// Simulated API call to fetch a document and read its content using text-to-speech
 async function readDocument() {
     try {
-        const response = await fetch('document.txt'); // Simulating API to fetch document
+        const response = await fetch('document.txt');
         const text = await response.text();
         const speech = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(speech);
@@ -15,7 +13,6 @@ async function readDocument() {
     }
 }
 
-// Function to listen to user's question and convert it to text
 async function listenForQuestion() {
     if (!('webkitSpeechRecognition' in window)) {
         alert('Your browser does not support speech recognition.');
@@ -37,7 +34,6 @@ async function listenForQuestion() {
         
         const documentText = await fetch('document.txt').then(res => res.text());
 
-        // Simple keyword search in the document
         const keywordFound = documentText.toLowerCase().includes(spokenText.toLowerCase());
         if (keywordFound) {
             questionResult.innerHTML += '<br>Answer: Your query matches content from the document.';
@@ -57,6 +53,5 @@ async function listenForQuestion() {
     recognition.start();
 }
 
-// Event listeners
 speakerBtn.addEventListener('click', readDocument);
 questionBtn.addEventListener('click', listenForQuestion);
